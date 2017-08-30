@@ -1,0 +1,22 @@
+{
+    "url": "http://ghost.com",
+    "database": {
+        "client": "sqlite3",
+        "connection": {
+            "filename": "content/data/ghost.db"
+        },
+        "useNullAsDefault": true,
+        "debug": false
+    },
+    "server": {
+        "host": "127.0.0.1",
+        "port": "2368"
+    },
+    "logging": {
+        "level": "info",
+        "transports": [
+            "stdout",
+            "file"
+        ]
+    }
+  }

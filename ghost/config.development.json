@@ -1,0 +1,22 @@
+{
+    "url": "http://testwebapp-932.azurewebsites.net",
+    "database": {
+        "client": "sqlite3",
+        "connection": {
+            "filename": "content/data/ghost-dev.db"
+        },
+        "useNullAsDefault": true,
+        "debug": false
+    },
+    "server": {
+        "host": "127.0.0.1",
+        "port": "2368"
+    },
+    "logging": {
+        "level": "info",
+        "transports": [
+            "stdout",
+            "file"
+        ]
+    }
+}

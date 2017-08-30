@@ -1,0 +1,95 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverFarmName": {
+            "type": "string",
+            "metadata": {
+            }
+        },
+        "serverFarmSku": {
+            "type": "string",
+            "allowedValues": [
+                "F1",
+                "D1",
+                "B1",
+                "S1"
+            ],
+            "defaultValue": "S1"
+        },
+        "webSiteName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "storageApiVersion": "2017-06-01",
+        "apiVersion": "2016-09-01",
+        "webSiteApiVersion": "2016-08-01",
+        "location": "[resourceGroup().location]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',parameters('serverFarmName'))]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'diagstor')]",
+
+        "sourceCodeRepositoryURL": "",
+        "sourceCodeBranch": "master",
+        "sourceCodeManualIntegration": true
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('storageApiVersion')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[variables('location')]",
+            "name": "[variables('storageAccountName')]",
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage"
+        },
+        {
+            "apiVersion": "[variables('apiVersion')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[variables('location')]",
+            "name": "[parameters('serverFarmName')]",
+            "dependsOn": [],
+            "properties": {
+                "name": "[parameters('serverFarmName')]"
+            },
+            "sku": {
+                "name": "[parameters('serverFarmSku')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('webSiteApiVersion')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[variables('location')]",
+            "name": "[parameters('webSiteName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[variables('serverFarmId')]"
+            },
+            "kind": "app",
+            "resources": [
+                {
+                    "apiVersion": "[variables('webSiteApiVersion')]",
+                    "type": "sourcecontrols",
+                    "name": "web",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', parameters('webSiteName'))]"
+                    ],
+                    "properties": {
+                        "RepoUrl": "[variables('sourceCodeRepositoryURL')]",
+                        "branch": "[variables('sourceCodeBranch')]",
+                        "IsManualIntegration": "[variables('sourceCodeManualIntegration')]"
+                    }
+                }
+            ]
+        }
+    ],
+    "outputs": {
+    }
+}
