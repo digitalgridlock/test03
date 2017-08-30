@@ -29,7 +29,7 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',parameters('serverFarmName'))]",
         "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'diagstor')]",
 
-        "sourceCodeRepositoryURL": "",
+        "sourceCodeRepositoryURL": "https://github.com/digitalgridlock/test03.git",
         "sourceCodeBranch": "master",
         "sourceCodeManualIntegration": true
     },
