@@ -1,1 +1,1 @@
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https://github.com/digitalgridlock/test03/azure-resource-manager/azure.deployment.with-repo.json",>)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/#create/Microsoft.Template/uri/https://github.com/digitalgridlock/test03/azure-resource-manager/azure.deployment.with-repo.json)
